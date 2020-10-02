@@ -15,3 +15,8 @@
 * Native Base UI
 
 * react-native-vector-icons
+
+---
+
+
+Route işlemleri `App.js` üzerinde yapılmıştır.
