@@ -1,15 +1,19 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, StyleSheet, ScrollView} from 'react-native';
 import axios from 'axios';
 
-function Details({navigation, route}) {
+function Details({route}) {
   const {userID} = route.params;
+
   const [user, setUser] = useState([]);
 
   const getDetails = () => {
     axios
       .get(`https://reqres.in/api/users/${userID}`)
-      .then((res) => setUser(res.data.data));
+      .then((res) => {
+        setUser(res.data.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {
@@ -17,22 +21,72 @@ function Details({navigation, route}) {
   }, [1]);
 
   return (
-    <View style={{borderTopWidth: 1}}>
-      <Image
-        source={{uri: user.avatar}}
-        style={{
-          marginVertical: 5,
-          width: 300,
-          height: 200,
-        }}
-      />
-      <Text>ID: {user.id}</Text>
-      <Text>
-        ADI: {user.first_name} {user.last_name}
-      </Text>
-      <Text>email: {user.email}</Text>
+    <View style={styles.container}>
+      <ScrollView>
+        <View style={styles.imageViewStyle}>
+          <Image style={styles.imageStyle} source={{uri: user.avatar}} />
+        </View>
+        <View style={styles.detailHeader}>
+          <Text style={{color: '#71A2F9', fontWeight: '700', fontSize: 13}}>
+            İş ve Ticaret
+          </Text>
+          <Text style={{color: '#2D3640', fontWeight: 'bold', fontSize: 18}}>
+            Dijital Pazarlama Teknikleri
+          </Text>
+          <Text style={{color: '#2D3640'}}>
+            {user.first_name} {user.last_name}{' '}
+          </Text>
+        </View>
+        <View style={styles.detailBody}>
+          <Text
+            style={{
+              textAlign: 'justify',
+              fontWeight: '700',
+              fontSize: 14,
+              color: '#2D3640',
+            }}>
+            Geleneksel pazarlama anlayışında baskı, televizyon, telefon gibi
+            araçlar kullanılır ve etki alanı sınırlıdır. Dijital pazarlamanın
+            geleneksel pazarlamadan maliyet, iletişim, zaman, kapsam,
+            kullanılabilirlik, deneyim sunumu, çalışan kişiler ve kullanılan dil
+            açısından farkları vardır. Geleneksel pazarlama anlayışında baskı,
+            televizyon, telefon gibi araçlar kullanılır ve etki alanı
+            sınırlıdır. Dijital pazarlamanın geleneksel pazarlamadan maliyet,
+            iletişim, zaman, kapsam, kullanılabilirlik, deneyim sunumu, çalışan
+            kişiler ve kullanılan dil açısından farkları vardır. Geleneksel
+            pazarlama anlayışında baskı, televizyon, telefon gibi araçlar
+            kullanılır ve etki alanı sınırlıdır. Dijital pazarlamanın geleneksel
+            pazarlamadan maliyet, iletişim, zaman, kapsam, kullanılabilirlik,
+            deneyim sunumu, çalışan kişiler ve kullanılan dil açısından farkları
+            vardır.
+          </Text>
+        </View>
+        <View style={styles.detailBottom}>
+          <Text style={{fontWeight: 'bold', color: '#71A2F9'}}>
+            İletişim bilgileri:
+          </Text>
+          <Text style={{fontWeight: '700'}}>
+            {user.first_name} {user.last_name}
+          </Text>
+          <Text style={{fontWeight: '700'}}>{user.email}</Text>
+        </View>
+      </ScrollView>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    borderTopWidth: 1,
+    borderTopColor: '#F3F3FC',
+  },
+  imageViewStyle: {flex: 1, alignItems: 'center', margin: 5},
+  imageStyle: {width: 335, height: 190, borderRadius: 5},
+  detailHeader: {flex: 1, marginHorizontal: 10, marginVertical: 5},
+  detailBody: {flex: 1, margin: 10},
+  detailBottom: {flex: 1, margin: 10},
+});
 
 export default Details;

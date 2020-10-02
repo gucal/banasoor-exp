@@ -13,6 +13,23 @@ import axios from 'axios';
 
 function Home({navigation}) {
   const [users, setUsers] = useState([]);
+  const [page, setPage] = useState(1);
+
+  const getUsers = () => {
+    axios
+      .get(`https://reqres.in/api/users?page=${page}`)
+      .then((res) => {
+        setUsers(users.concat(res.data.data));
+      })
+      .catch((err) => console.log(err));
+  };
+  useEffect(() => {
+    getUsers();
+  }, [page]);
+
+  const moreLoadFlatList = () => {
+    setPage(page + 1);
+  };
 
   const Item = ({user}) => (
     <View style={styles.cardViewStyle}>
@@ -31,27 +48,23 @@ function Home({navigation}) {
             {user.first_name} {user.last_name}
           </Text>
           <View style={styles.cardBottomStyle}>
-            <Text style={{flex: 5, fontSize: 14, fontWeight: '700'}}>5.0</Text>
-            <Text style={{fontWeight: '700', fontSize: 14}}>30₺ / dakika</Text>
+            <Text
+              style={{
+                flex: 5,
+                fontSize: 14,
+                color: '#6BA1FF',
+                fontWeight: '700',
+              }}>
+              5.0 puan
+            </Text>
+            <Text style={{fontWeight: '700', color: '#6BA1FF', fontSize: 14}}>
+              30₺ / dakika
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
     </View>
   );
-
-  const getUsers = () => {
-    axios
-      .get('https://reqres.in/api/users?page=1')
-      .then((res) => {
-        console.log(res.data.data);
-        setUsers(res.data.data);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    getUsers();
-  }, [1]);
 
   const renderUser = ({item}) => <Item user={item} />;
 
@@ -62,7 +75,8 @@ function Home({navigation}) {
           <TextInput
             style={styles.searchStyle}
             placeholder={'Uzman ya da konu ara'}
-            placeholderTextColor="#8A94A4"
+            placeholderTextColor="#757575"
+            returnKeyType="search"
           />
         </View>
         <View style={styles.listView}>
@@ -72,6 +86,8 @@ function Home({navigation}) {
             renderItem={renderUser}
             horizontal
             showsHorizontalScrollIndicator={false}
+            keyExtractor={(item, index) => index.toString()}
+            onEndReached={moreLoadFlatList}
           />
         </View>
         <View style={styles.listView}>
@@ -81,6 +97,8 @@ function Home({navigation}) {
             renderItem={renderUser}
             horizontal
             showsHorizontalScrollIndicator={false}
+            keyExtractor={(item, index) => index.toString()}
+            onEndReached={moreLoadFlatList}
           />
         </View>
       </ScrollView>
@@ -95,10 +113,10 @@ const styles = StyleSheet.create({
   listTitle: {fontWeight: 'bold', fontSize: 16, marginHorizontal: 10},
   searchStyle: {
     fontSize: 14,
-    backgroundColor: '#F9F9FB',
+    backgroundColor: '#DCDCDC',
     marginHorizontal: 10,
     borderRadius: 5,
-    padding: 5,
+    padding: 10,
   },
   cardViewStyle: {marginTop: 10, flex: 1},
   cardStyle: {

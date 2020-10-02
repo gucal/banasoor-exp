@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, View, Text, StyleSheet, Image, StatusBar} from 'react-native';
+import {StyleSheet, Image} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
@@ -22,8 +22,6 @@ export default function App() {
       <Stack.Navigator
         screenOptions={{
           headerStyle: styles.headerStyle,
-          headerTintColor: '#000000',
-          headerTitleStyle: styles.titleStyle,
         }}
         initialRouteName="Home">
         <Stack.Screen
@@ -43,5 +41,4 @@ export default function App() {
 
 const styles = StyleSheet.create({
   headerStyle: {backgroundColor: '#FFFFFF', elevation: 0, shadowOpacity: 0},
-  titleStyle: {textAlign: 'center', fontSize: 18},
 });
