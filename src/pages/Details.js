@@ -1,5 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Image, StyleSheet, ScrollView} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import axios from 'axios';
 
 function Details({route}) {
@@ -70,6 +78,26 @@ function Details({route}) {
           </Text>
           <Text style={{fontWeight: '700'}}>{user.email}</Text>
         </View>
+        <TouchableOpacity
+          onPress={() =>
+            Alert.alert(
+              'Görüşme Talebi',
+              `${user.first_name} ${user.last_name} ile görüşme talebiniz alındı!`,
+              [{text: 'Tamam'}],
+            )
+          }
+          style={styles.button}>
+          <Text style={styles.buttonText}>Görüşme Talebi</Text>
+          <Text style={styles.buttonPriceText}>₺7.67</Text>
+          <Text
+            style={{
+              fontWeight: '600',
+              fontSize: 12,
+              color: '#FFFFFF',
+            }}>
+            /dakika
+          </Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -87,6 +115,16 @@ const styles = StyleSheet.create({
   detailHeader: {flex: 1, marginHorizontal: 10, marginVertical: 5},
   detailBody: {flex: 1, margin: 10},
   detailBottom: {flex: 1, margin: 10},
+  button: {
+    flex: 1,
+    margin: 10,
+    flexDirection: 'row',
+    padding: 10,
+    borderRadius: 5,
+    backgroundColor: '#0861FB',
+  },
+  buttonText: {flex: 1, fontWeight: '700', color: '#FFFFFF'},
+  buttonPriceText: {fontWeight: '700', color: '#FFFFFF'},
 });
 
 export default Details;

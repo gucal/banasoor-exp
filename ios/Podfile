@@ -8,6 +8,8 @@ target 'SiuExp' do
 
   use_react_native!(:path => config["reactNativePath"])
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'SiuExpTests' do
     inherit! :complete
     # Pods for testing

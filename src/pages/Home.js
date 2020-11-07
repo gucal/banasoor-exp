@@ -9,7 +9,9 @@ import {
   TextInput,
   Image,
 } from 'react-native';
+
 import axios from 'axios';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 function Home({navigation}) {
   const [users, setUsers] = useState([]);
@@ -74,9 +76,15 @@ function Home({navigation}) {
         <View style={styles.searchView}>
           <TextInput
             style={styles.searchStyle}
-            placeholder={'Uzman ya da konu ara'}
-            placeholderTextColor="#757575"
+            placeholder={'Uzmanlarda ya da konularda ara'}
+            placeholderTextColor="#8A94A4"
             returnKeyType="search"
+          />
+          <Icon
+            style={{padding: 10}}
+            color="#0861FB"
+            name="ios-search"
+            size={20}
           />
         </View>
         <View style={styles.listView}>
@@ -108,14 +116,20 @@ function Home({navigation}) {
 
 const styles = StyleSheet.create({
   container: {flex: 1, backgroundColor: 'white'},
-  searchView: {flex: 1, marginBottom: 10},
+  searchView: {
+    flex: 1,
+    flexDirection: 'row',
+    marginBottom: 10,
+    alignItems: 'center',
+    backgroundColor: '#F9F9FB',
+    marginHorizontal: 10,
+    borderRadius: 5,
+  },
   listView: {flex: 3, marginTop: 10},
   listTitle: {fontWeight: 'bold', fontSize: 16, marginHorizontal: 10},
   searchStyle: {
+    flex: 1,
     fontSize: 14,
-    backgroundColor: '#DCDCDC',
-    marginHorizontal: 10,
-    borderRadius: 5,
     padding: 10,
   },
   cardViewStyle: {marginTop: 10, flex: 1},
